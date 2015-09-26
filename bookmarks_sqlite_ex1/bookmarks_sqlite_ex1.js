@@ -1,12 +1,18 @@
 // Web page server with DB for bookmarks handling. Rendered by ejs.
 // Ref:
-//  https://cozy.io/en/hack/getting-started/first-app.html
+// https://cozy.io/en/hack/getting-started/first-app.html
 
+var fs = require('graceful-fs');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('bookmarks.db');
+var dbFile = 'bookmarks.db';
+fs.openSync(__dirname + '/' + dbFile, 'a', function(err) {
+    if(err) throw err;
+});
+var db = new sqlite3.Database(dbFile);
 
 
 // We add configure directive to tell express to use Jade to render templates.
