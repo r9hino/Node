@@ -1,0 +1,17 @@
+{
+  "name": "diet_creation_ex0",
+  "version": "0.0.1",
+  "description": "",
+  "main": "diet_creation_ex0.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "r9hino",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "jade": "^1.11.0"
+  }
+}

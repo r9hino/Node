@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+	<title> Bookmarks </title>
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <form method="post" action="add" data-ajax="false">
+    <label>Title:</label>
+    <input type="text" name="title" id="title" placeholder="Bookmark"/>
+    
+    <label>URL:</label>
+    <input type="text" name="url" placeholder="URL"/>
+      
+    <input type="submit" value="Add a new bookmark"/>
+    
+    <ul id="bookmarks">
+      <% bookmarks.forEach(function(bookmark){ %>
+        <li>
+          <a href=<%= bookmark.url %>><%= bookmark.title %></a>
+          &nbsp;
+          <a href="delete/<%= bookmark.id %>">delete</a>
+        </li>
+      <% }) %>
+    </ul>
+
+  </form>
+</body>
+
+</html>
