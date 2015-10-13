@@ -6,10 +6,6 @@ var i2c1;
 
 // I2C device configuration address and registers.
 var i2cAddress = 0x20;
-var i2cGPIO0 = 0x0;
-var i2cGPIO1 = 0x1;
-var i2cIODIR0 = 0x6;
-var i2cIODIR1 = 0x7;
 
 
 var relayArrayOnState = [{relayID: 1, state: 'on'},
@@ -41,7 +37,7 @@ function changeRelayState(relayID, state, callback){
     var relayMask = 1<<(relayID-1);
     
     // Get relay board state -> 00001111    
-    i2c1.readByte(i2cAddress, i2cGPIO0, function(err, relayBoardState){
+    i2c1.receiveByte(i2cAddress, function(err, relayBoardState){
         if(err) return err;
         
         if(state === 'on'){
@@ -55,14 +51,12 @@ function changeRelayState(relayID, state, callback){
         }
         
         // Write new relay board state.
-        i2c1.writeByte(i2cAddress, i2cGPIO0, relayBoardState, function(err){
+        i2c1.sendByte(i2cAddress, relayBoardState, function(err){
             if(err)  return callback(err, relayBoardState);
             callback(null, relayBoardState);
         });
     });
 }
-
-
 
 async.series([
     function (cb){
@@ -70,23 +64,12 @@ async.series([
     },
     function(cb){
         // Set GPIO0 port from I2C device as outputs.
-        i2c1.writeByte(i2cAddress, i2cIODIR0, 0x0, function(err){
+        i2c1.sendByte(i2cAddress, 0x0, function(err){
             if(err){
                 console.log('Error configuring GPIO0 port as output: ' + err);
                 return cb(err);
             }
             console.log('GPIO0 ports set successfully as outputs.');
-            cb(null);
-        });
-    },
-    function(cb){
-        // Set GPIO1 port from I2C device as outputs.
-        i2c1.writeByte(i2cAddress, i2cIODIR1, 0x0, function(err){
-            if(err){
-                console.log('Error configuring GPIO1 port as output: ' + err);
-                return cb(err);
-            }
-            console.log('GPIO1 ports set successfully as outputs.');
             cb(null);
         });
     },

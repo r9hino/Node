@@ -51,9 +51,9 @@ async.series([
     },
     function(cb){
         // Set GPIO1 port from I2C device as outputs.
-        i2c1.writeByte(i2cAddress, i2cIODIR0, 0x0, function(err){
+        i2c1.writeByte(i2cAddress, i2cIODIR1, 0x0, function(err){
             if(err){
-                console.log('Error configuring GPIO0 port as output: ' + err);
+                console.log('Error configuring GPIO1 port as output: ' + err);
                 return cb(err);
             }
             console.log('GPIO0 ports set successfully as outputs.');
