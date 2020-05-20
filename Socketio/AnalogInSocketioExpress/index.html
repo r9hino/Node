@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Automation Web Server with BeagleBone</title>
+    <script src = "/socket.io/socket.io.js" ></script>
+    <script>
+        // Establishing connection with server
+        var socket = io(); // Defaults to trying to connect to the host that serves the page.
+
+
+        socket.on('analogUpdate', function(analogUpdate) {
+            document.getElementById("statusAnalog1").innerHTML = "Analog 1 value: " + analogUpdate.valueAnalogA3;
+            document.getElementById("statusAnalog2").innerHTML = "Analog 2 value: " + analogUpdate.valueAnalogA4;
+            document.getElementById("statusAnalog3").innerHTML = "Analog 3 value: " + analogUpdate.valueAnalogA5;
+            document.getElementById("statusAnalog4").innerHTML = "Analog 4 value: " + analogUpdate.valueAnalogA6;
+        });
+
+        // Changes the led state
+        function changeState(state){
+            if (state==1){
+                // Emit message changing the state to 1
+                socket.emit('changeState', '{"state":1}');
+                // Change led status on web page to ON
+                document.getElementById("outputStatus").innerHTML = "Status: ON";
+            }
+            else if (state==0){
+                // Emit message changing the state to 0
+                socket.emit('changeState', '{"state":0}');
+                // Change led status on web page to OFF
+                document.getElementById("outputStatus").innerHTML = "Status: OFF";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Beaglebone Test</h1>
+    </div>    
+    <div>
+        <p id="outputStatus">Status</p>
+        <button type="button" onclick="changeState(1);">ON</button>
+        <button type="button" onclick="changeState(0);">OFF</button>
+    </div>
+    <div>
+        <p id="statusAnalog1">Analog 1 value:</p>
+        <p id="statusAnalog2">Analog 2 value:</p>
+        <p id="statusAnalog3">Analog 3 value:</p>
+        <p id="statusAnalog4">Analog 4 value:</p>
+    </div>
+</body>
+</html>
