@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
-import {Navbar, Nav} from 'react-bootstrap';
 import socketIOClient from 'socket.io-client';
 import Monitor from './Monitor';
 import InputOutput from './InputOutput';
@@ -38,16 +37,13 @@ function App() {
     <Router>
     <div className="App">
       <header>
-        <Navbar variant="dark" bg="dark">
-          <Navbar.Brand style={{marginRight:'35px'}} href="/">BBB Fabrica</Navbar.Brand>
-          
-            
-            <Nav>
-              <Link style={linkStyle} to="/">Monitor</Link>
-              <Link style={linkStyle} to="/inputoutput">IO</Link>
-            </Nav>
-          
-        </Navbar>
+        <nav className="navbar navbar-default navbar-dark bg-dark">
+          <a className="navbar-brand" style={{marginRight:'35px'}} href="/">BBB Fabrica</a>
+          <nav>
+            <Link style={linkStyle} to="/">Monitor</Link>
+            <Link style={linkStyle} to="/inputoutput">IO</Link>
+          </nav>
+        </nav>
       </header>
         <div className="container-fluid">
           <Switch>

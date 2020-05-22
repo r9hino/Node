@@ -1,14 +1,13 @@
 import React from 'react';
-import {Table} from 'react-bootstrap';
 
 
 export default function Monitor({staticSystemData, dynamicSystemData}) {
     
     return (
         <React.Fragment>
-          <div style={{margin:'0 auto'}} className="row col-sm-6 my-4">
+          <div style={{margin:'0 auto'}} className="row col-md-8 my-4">
             <h5>Beaglebone Gateway Data</h5>
-            <Table striped hover size="sm">
+            <table className="table table-striped table-hover table-borderless table-sm">
               <tbody>
                 <tr>
                   <td>Distro</td>
@@ -35,11 +34,11 @@ export default function Monitor({staticSystemData, dynamicSystemData}) {
                   <td>{dynamicSystemData !== "" ? dynamicSystemData.time.timezone : ""}</td>
                 </tr>
               </tbody>
-            </Table>
+            </table>
           </div>
-          <div style={{margin:'0 auto'}} className="row col-sm-6 my-4">
+          <div style={{margin:'0 auto'}} className="row col-md-8 my-4">
             <h5>Beaglebone OS Variables</h5>
-            <Table striped hover size="sm">
+            <table className="table table-striped table-hover table-borderless table-sm">
               <tbody>
                 <tr>
                   <td>CPU Total Load</td>
@@ -70,11 +69,11 @@ export default function Monitor({staticSystemData, dynamicSystemData}) {
                   <td>{dynamicSystemData !== "" ? `${dynamicSystemData.memoryDisk.used} MB (${dynamicSystemData.memoryDisk.usedPercent})` : ""}</td>
                 </tr>
               </tbody>
-            </Table>
+            </table>
           </div>
-          <div style={{margin:'0 auto'}} className="row col-sm-6 my-4">
+          <div style={{margin:'0 auto'}} className="row col-md-8 my-4">
             <h5>Beaglebone Conectivity</h5>
-            <Table striped hover size="sm">
+            <table className="table table-striped table-hover table-borderless table-sm">
               <tbody>
                 <tr>
                   <td>Beaglebone IP</td>
@@ -93,7 +92,7 @@ export default function Monitor({staticSystemData, dynamicSystemData}) {
                   <td>{staticSystemData !== "" ? staticSystemData.network.iface : ""}</td>
                 </tr>
               </tbody>
-            </Table>
+            </table>
           </div>
         </React.Fragment>
     );
