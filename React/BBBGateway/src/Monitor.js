@@ -57,8 +57,8 @@ export default function Monitor({staticSystemData, dynamicSystemData}) {
                 <td>{dynamicSystemData !== "" ? dynamicSystemData.memoryRAM.total + " MB": ""}</td>
               </tr>
               <tr>
-                <td>Used RAM</td>
-                <td>{dynamicSystemData !== "" ? `${dynamicSystemData.memoryRAM.used} MB (${dynamicSystemData.memoryRAM.usedPercent})` : ""}</td>
+                <td>Active RAM</td>
+                <td>{dynamicSystemData !== "" ? `${dynamicSystemData.memoryRAM.active} MB (${dynamicSystemData.memoryRAM.activePercent})` : ""}</td>
               </tr>
               <tr>
                 <td>System Memory</td>

@@ -88,8 +88,9 @@ const getDynamicSystemData = async () => {
         
         dynamicSystemData.memoryRAM = {
             total: (memoryRAM.total/1024/1024).toFixed(1),
+            active: (memoryRAM.active/1024/1024).toFixed(1),
             used: (memoryRAM.used/1024/1024).toFixed(1),
-            usedPercent: (100*memoryRAM.used/memoryRAM.total).toFixed(1) + "%"
+            activePercent: (100*memoryRAM.active/memoryRAM.total).toFixed(1) + "%"
         };
         
         dynamicSystemData.memoryDisk = {
