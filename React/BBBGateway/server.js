@@ -19,8 +19,8 @@ const inAnalogA6 = "A6";
 let interval;
 
 io.on("connection", (socket) => {
-    console.log(`Client connected - IP ${socket.request.connection.remoteAddress.split(":")[3]}`);
-    //console.log(socket.request.connection);
+    console.log(`Client connected  -  IP ${socket.request.connection.remoteAddress.split(":")[3]}  -  Client(s) ${io.engine.clientsCount}`);
+
     if(interval) clearInterval(interval);
     
     getStaticSystemData();
@@ -31,8 +31,8 @@ io.on("connection", (socket) => {
     }, 1000);
     
     socket.on("disconnect", () => {
-        console.log(`Client disconnected - IP ${socket.request.connection.remoteAddress.split(":")[3]}`);
-        clearInterval(interval);
+        console.log(`Client disconnected  -  IP ${socket.request.connection.remoteAddress.split(":")[3]}  -  Client(s) ${io.engine.clientsCount}`);
+        if(io.engine.clientsCount === 0) clearInterval(interval);
     });
 });
 
