@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "Client-Server-App",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,11 +16,8 @@
   },
   "scripts": {
     "start": "HOST=fabricabolos.mooo.com PORT=8888 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build"
   },
-  "proxy": "http://localhost:5555",
   "eslintConfig": {
     "extends": "react-app"
   },

@@ -7,7 +7,7 @@ const si = require('systeminformation');
 
 const port = 5555;
 const app = express();
-const server = http.createServer(app).listen(port, () => console.log(`Listening on port ${port}`));;
+const server = http.createServer(app).listen(port, () => console.log(`Listening on port ${port}`));
 const io = socketio(server);
 
 // Bone: AIN -> P9_39: A0    P9_40: A1    P9_37: A2    P9_38: A3    P9_33: A4    P9_36: A5     P9_35: A6
@@ -19,26 +19,27 @@ const inAnalogA6 = "A6";
 let interval;
 
 io.on("connection", (socket) => {
-    console.log("Client connected");
+    console.log(`Client connected - IP ${socket.request.connection.remoteAddress.split(":")[3]}`);
+    //console.log(socket.request.connection);
     if(interval) clearInterval(interval);
     
-    getStaticSystemData(socket);
+    getStaticSystemData();
     
     interval = setInterval(() => {
-        getDynamicSystemData(socket);
-        getSensorData(socket);
+        getDynamicSystemData();
+        getSensorData();
     }, 1000);
     
     socket.on("disconnect", () => {
-        console.log("Client disconnected");
+        console.log(`Client disconnected - IP ${socket.request.connection.remoteAddress.split(":")[3]}`);
         clearInterval(interval);
     });
 });
 
 
-const getStaticSystemData = async socket => {
+const getStaticSystemData = async () => {
     try {
-        let [time, osInfo, network, networkGateway] = await Promise.all([si.time(), si.osInfo(), si.networkInterfaces(), si.networkGatewayDefault()]);
+        let [osInfo, network, networkGateway] = await Promise.all([si.osInfo(), si.networkInterfaces(), si.networkGatewayDefault()]);
         network = network.filter(obj => {return obj.type === 'wireless'})[0];
 
         const staticSystemData = {};
@@ -57,7 +58,7 @@ const getStaticSystemData = async socket => {
             iface: network.iface
         }
         
-        socket.emit('socketStaticSystemData', staticSystemData);
+        io.emit('socketStaticSystemData', staticSystemData);
         //console.log(staticSystemData);
     }
     catch(e){
@@ -66,7 +67,7 @@ const getStaticSystemData = async socket => {
 };
 
 
-const getDynamicSystemData = async socket => {
+const getDynamicSystemData = async () => {
     try {
         let [time, cpu, memoryRAM, memoryDisk] = await Promise.all([si.time(), si.currentLoad(), si.mem(), si.fsSize()]);
         memoryDisk = memoryDisk[0];
@@ -97,7 +98,7 @@ const getDynamicSystemData = async socket => {
             usedPercent: (100*memoryDisk.used/memoryDisk.size).toFixed(1) + "%"
         };
         
-        socket.emit('socketDynamicSystemData', dynamicSystemData);
+        io.emit('socketDynamicSystemData', dynamicSystemData);
         //console.log(dynamicSystemData);
     }
     catch(e){
@@ -105,14 +106,14 @@ const getDynamicSystemData = async socket => {
     }
 };
 
-const getSensorData = socket => {
+const getSensorData = () => {
     const valueAnalogA3 = bonescript.analogRead(inAnalogA3);
     const valueAnalogA4 = bonescript.analogRead(inAnalogA4);
     const valueAnalogA5 = bonescript.analogRead(inAnalogA5);
     const valueAnalogA6 = bonescript.analogRead(inAnalogA6);
 
     // Emitting a new message. Will be consumed by the client.
-    socket.emit('socketAnalogValues', {"analogA3": (valueAnalogA3*100).toFixed(1) + '%  ' + (1.8*valueAnalogA3).toFixed(3) + 'V',
+    io.emit('socketAnalogValues', {"analogA3": (valueAnalogA3*100).toFixed(1) + '%  ' + (1.8*valueAnalogA3).toFixed(3) + 'V',
                                        "analogA4": (valueAnalogA4*100).toFixed(1) + '%  ' + (1.8*valueAnalogA4).toFixed(3) + 'V',
                                        "analogA5": (valueAnalogA5*100).toFixed(1) + '%  ' + (1.8*valueAnalogA5).toFixed(3) + 'V',
                                        "analogA6": (valueAnalogA6*100).toFixed(1) + '%  ' + (1.8*valueAnalogA6).toFixed(3) + 'V'

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
 import socketIOClient from 'socket.io-client';
+
 import Monitor from './Monitor';
 import InputOutput from './InputOutput';
 
@@ -16,7 +17,7 @@ function App() {
   
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
-    
+
     socket.on("socketStaticSystemData", data => {
       setStaticSystemData(data);
       //console.log(data);
