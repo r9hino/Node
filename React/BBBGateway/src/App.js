@@ -7,7 +7,7 @@ import InputOutput from './InputOutput';
 
 import './App.css';
 
-const ENDPOINT = "http://fabricabolos.mooo.com:5555";
+const ENDPOINT = "http://192.168.0.109:5555";
 
 
 function App() {
