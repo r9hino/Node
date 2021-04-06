@@ -12,7 +12,7 @@
     "serialport": "^9.0.0",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
-    "systeminformation": "^4.26.1"
+    "systeminformation": "^5.6.4"
   },
   "scripts": {
     "start": "HOST=192.168.0.109 PORT=8888 react-scripts start",
